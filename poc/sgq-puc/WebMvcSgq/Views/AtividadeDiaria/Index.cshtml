@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebMvcSgq.Models.Tbl_Atividade_Diaria>
+
+@{
+    ViewBag.Title = "Atividade diária";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "IdAtividadeDiaria", rowsPerPage: 5, canSort: true);
+}
+
+<br />
+
+<h4>Atividade diária</h4>
+<hr />
+<p>
+    @Html.ActionLink("Nova atividade", "AdicionaAtividadeDiaria", new { IdAtividadeDiaria = 0 }, new { @class = "btn btn-primary" })
+</p>
+
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("IdAtividadeDiaria",header:"ID",style:"text-align-left"),
+    grid.Column("tbl_Processo.Nome",header:"Processo"),
+    grid.Column("Descricao",header:"Descricao"),
+    grid.Column("Dt_Cadastro",header:"Data Cadastro"),
+    grid.Column("Dt_Alteracao",header:"Data Alteracao"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink(" ", "Detalhes", new { IdAtividadeDiaria = item.IdAtividadeDiaria }, new { @class = "btn btn-sm btn-info glyphicon glyphicon glyphicon-search", title="Ver detalhe" })
+
+    @Html.ActionLink(" ", "EditarAtividadeDiaria", new {IdAtividadeDiaria = item.IdAtividadeDiaria, IdProcesso = item.IdProcesso }, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title="Editar" })
+
+    @Html.ActionLink(" ", "DeletarAtividadeDiaria", new {IdAtividadeDiaria = item.IdAtividadeDiaria }, new { @class = "btn btn-sm btn-danger glyphicon glyphicon-remove", title="Excluir" })
+
+    @Html.ActionLink(" ", "NovaNaoConformidade", "NaoConformidade", null, new { @class = "btn btn-sm btn-primary glyphicon glyphicon glyphicon-new-window", title="Nova não conformidade" })
+    </text>
+)
+}
+)
+
+@using (Html.BeginForm("Index", "Processo", FormMethod.Get))
+{
+    @Html.ActionLink(" ", "Index", "Processo", null, new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+}
+

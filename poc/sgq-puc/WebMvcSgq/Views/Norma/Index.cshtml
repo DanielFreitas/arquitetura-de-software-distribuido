@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebMvcSgq.Models.Classe.LinksWrapper<WebMvcSgq.Models.Classe.Content>>
+
+@{
+    ViewBag.Title = "Detalhes de normas";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "NormaId", rowsPerPage: 5, canSort: true);
+}
+
+<br />
+
+<h4>Detalhes de normas</h4>
+<hr />
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("Content.NormaId",header:"ID",style:"text-align-left"),
+    grid.Column("Content.Titulo",header:"Nome"),
+    grid.Column("Content.DataPublicacao",header:"Data Publicacao"),
+    grid.Column("Content.Comite",header:"Comite"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink(" ", "Detalhes", new { normaId = item.Content.NormaId },new { @class = "btn btn-sm btn-info glyphicon glyphicon glyphicon-search", title="Ver detalhe" })
+    </text>
+)
+
+}
+)

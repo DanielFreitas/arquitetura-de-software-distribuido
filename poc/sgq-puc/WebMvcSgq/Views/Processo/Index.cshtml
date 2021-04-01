@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebMvcSgq.Models.tbl_Processo>
+
+@{
+    ViewBag.Title = "Index";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "IdProcesso", rowsPerPage: 5, canSort: true);
+}
+
+<br />
+
+<h4>Cadastro de processo</h4>
+<hr />
+<p>
+    @Html.ActionLink("Novo processo", "AdicionarProcesso", null, new { @class = "btn btn-primary" })
+</p>
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("IdProcesso",header:"ID",style:"text-align-left"),
+    grid.Column("Nome",header:"Nome"),
+    grid.Column("Dt_Cadastro",header:"Data Cadastro"),
+    grid.Column("Dt_Alteracao",header:"Data Alteracao"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink(" ", "Detalhes", new { id = item.IdProcesso }, new { @class = "btn btn-sm btn-info glyphicon glyphicon glyphicon-search", title="Ver detalhe" })
+
+    @Html.ActionLink(" ", "EditarProcesso", new { id = item.IdProcesso }, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title="Editar" })
+
+    @Html.ActionLink(" ", "DeletarProcesso", new { id = item.IdProcesso }, new { @class = "btn btn-sm btn-danger glyphicon glyphicon-remove", title="Excluir" })
+
+    @Html.ActionLink(" ","Index", "AtividadeDiaria",new { id = item.IdProcesso }, new { @class = "btn btn-sm btn-primary glyphicon glyphicon glyphicon-new-window", title="Lista de atividade diária" })
+
+    <!--@Html.ActionLink(" ","Index", "Etapa",new { id = item.IdProcesso },new { @class = "btn btn-sm btn-primary glyphicon glyphicon glyphicon-new-window", title="Etapas do Processo" })-->
+    </text>
+)
+
+}
+)

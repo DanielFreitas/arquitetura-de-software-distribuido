@@ -1,0 +1,99 @@
+﻿@model WebMvcSgq.Models.Classe.RelatorioClass
+
+@{
+    ViewBag.Title = "Pesquisar processos e atividades realizadas ";
+
+}
+
+<br />
+
+<h4>Pesquisar processos e atividades realizadas</h4>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <br />
+
+    <div class="form-horizontal">
+        @using (Html.BeginForm("Index", "Relatorio", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdAtividadeDiaria, "Atividade diária", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.IdAtividadeDiaria, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdAtividadeDiaria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdProcesso, "Processo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.IdProcesso, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdProcesso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, "Filtrar Etapa Concluida", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(model => model.IsActive, new { htmlAtributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+        }
+
+        <br />
+
+        <div style="color: red;">
+            <h4>@ViewBag.Message</h4>
+        </div>
+
+        <br />
+
+        <table class="webGrid" id="tblAtividades">
+            <tr class="grid-header">
+                <th>Processo</th>
+                <th>Atividade Diaria</th>
+                <th>Etapa</th>
+                <th>Status</th>
+                <th>Data de Cadastro</th>
+            </tr>
+
+
+
+            @for (var a = 0; a < Model.relatProcesso.Count(); a++)
+            {
+                string css = "alt";
+
+                if ((a % 2) == 0)
+                {
+                    css = "";
+                }
+
+                <tr class="@css">
+                    <td>@Model.relatProcesso[a].NomeProcesso</td>
+                    <td>@Model.relatProcesso[a].NomeAtividadeDiaria</td>
+                    <td>@Model.relatProcesso[a].Etapa</td>
+                    <td>@Model.relatProcesso[a].status</td>
+                    <td>@Model.relatProcesso[a].DataCadastro</td>
+                </tr>
+
+            }
+
+        </table>
+
+        <br />
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+
+}

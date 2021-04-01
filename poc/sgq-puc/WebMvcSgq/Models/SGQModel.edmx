@@ -1,0 +1,642 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="db_sgqModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Acessos">
+          <Key>
+            <PropertyRef Name="IdAcesso" />
+          </Key>
+          <Property Name="IdAcesso" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DsAcesso" Type="varchar" MaxLength="300" />
+          <Property Name="IdFuncaoAcesso" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Tbl_Atividade_Diaria">
+          <Key>
+            <PropertyRef Name="IdAtividadeDiaria" />
+          </Key>
+          <Property Name="IdAtividadeDiaria" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProcesso" Type="bigint" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" />
+          <Property Name="Dt_Cadastro" Type="datetime" />
+          <Property Name="Dt_Alteracao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_atividades">
+          <Key>
+            <PropertyRef Name="IdAtividade" />
+          </Key>
+          <Property Name="IdAtividade" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAtividadeDiaria" Type="bigint" />
+          <Property Name="IdEtapa" Type="bigint" />
+          <Property Name="DsSelecionado" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_etapa">
+          <Key>
+            <PropertyRef Name="IdEtapa" />
+          </Key>
+          <Property Name="IdEtapa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProcesso" Type="bigint" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" />
+          <Property Name="Complemento" Type="varchar" MaxLength="140" />
+          <Property Name="Dt_Cadastro" Type="datetime" />
+          <Property Name="Dt_Alteração" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_funcao">
+          <Key>
+            <PropertyRef Name="IdFuncao" />
+          </Key>
+          <Property Name="IdFuncao" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DsFuncao" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tbl_Funcionario">
+          <Key>
+            <PropertyRef Name="IdFuncionario" />
+          </Key>
+          <Property Name="IdFuncionario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFuncao" Type="bigint" />
+          <Property Name="DsFuncionario" Type="varchar" MaxLength="50" />
+          <Property Name="DsUsuario" Type="varchar" MaxLength="50" />
+          <Property Name="DsSenha" Type="varchar" MaxLength="100" />
+          <Property Name="Dt_Cadastro" Type="datetime" />
+          <Property Name="Dt_Alteracao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_NaoConformidade">
+          <Key>
+            <PropertyRef Name="IdNaoConformidade" />
+          </Key>
+          <Property Name="IdNaoConformidade" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProcesso" Type="bigint" />
+          <Property Name="IdAtividadeDiaria" Type="bigint" />
+          <Property Name="DsNaoConformidade" Type="varchar" MaxLength="100" />
+          <Property Name="Dstatus" Type="bit" Nullable="false" />
+          <Property Name="Dt_Cadastro" Type="datetime" />
+          <Property Name="Dt_Alteracao" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_NaoConformidade_x_Norma">
+          <Key>
+            <PropertyRef Name="IdSequencial" />
+          </Key>
+          <Property Name="IdNorma" Type="bigint" Nullable="false" />
+          <Property Name="IdNaoConformidade" Type="bigint" Nullable="false" />
+          <Property Name="UrlNorma" Type="varchar(max)" />
+          <Property Name="Titulo" Type="varchar(max)" />
+          <Property Name="IdSequencial" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Processo">
+          <Key>
+            <PropertyRef Name="IdProcesso" />
+          </Key>
+          <Property Name="IdProcesso" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" />
+          <Property Name="Dt_Cadastro" Type="datetime" />
+          <Property Name="Dt_Alteracao" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_AtivDiaria_AtividadeId">
+          <End Role="Tbl_Atividade_Diaria" Type="Self.Tbl_Atividade_Diaria" Multiplicity="0..1" />
+          <End Role="tbl_atividades" Type="Self.tbl_atividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Principal>
+            <Dependent Role="tbl_atividades">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AtivDiaria_EtapaId">
+          <End Role="tbl_etapa" Type="Self.tbl_etapa" Multiplicity="0..1" />
+          <End Role="tbl_atividades" Type="Self.tbl_atividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_etapa">
+              <PropertyRef Name="IdEtapa" />
+            </Principal>
+            <Dependent Role="tbl_atividades">
+              <PropertyRef Name="IdEtapa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Atividade_naoConformidade">
+          <End Role="Tbl_Atividade_Diaria" Type="Self.Tbl_Atividade_Diaria" Multiplicity="0..1" />
+          <End Role="tbl_NaoConformidade" Type="Self.tbl_NaoConformidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Principal>
+            <Dependent Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Funcao_AcessoId">
+          <End Role="tbl_funcao" Type="Self.tbl_funcao" Multiplicity="0..1" />
+          <End Role="tbl_Acessos" Type="Self.tbl_Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_funcao">
+              <PropertyRef Name="IdFuncao" />
+            </Principal>
+            <Dependent Role="tbl_Acessos">
+              <PropertyRef Name="IdFuncaoAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Funcao_FuncionarioId">
+          <End Role="tbl_funcao" Type="Self.tbl_funcao" Multiplicity="0..1" />
+          <End Role="tbl_Funcionario" Type="Self.tbl_Funcionario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_funcao">
+              <PropertyRef Name="IdFuncao" />
+            </Principal>
+            <Dependent Role="tbl_Funcionario">
+              <PropertyRef Name="IdFuncao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_AtividadeId">
+          <End Role="tbl_Processo" Type="Self.tbl_Processo" Multiplicity="0..1" />
+          <End Role="Tbl_Atividade_Diaria" Type="Self.Tbl_Atividade_Diaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_EtapaId">
+          <End Role="tbl_Processo" Type="Self.tbl_Processo" Multiplicity="0..1" />
+          <End Role="tbl_etapa" Type="Self.tbl_etapa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="tbl_etapa">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_naoConformidade">
+          <End Role="tbl_Processo" Type="Self.tbl_Processo" Multiplicity="0..1" />
+          <End Role="tbl_NaoConformidade" Type="Self.tbl_NaoConformidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Norma_x_Tbl_NaoConformidade">
+          <End Role="tbl_NaoConformidade" Type="Self.tbl_NaoConformidade" Multiplicity="1" />
+          <End Role="Tbl_NaoConformidade_x_Norma" Type="Self.Tbl_NaoConformidade_x_Norma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdNaoConformidade" />
+            </Principal>
+            <Dependent Role="Tbl_NaoConformidade_x_Norma">
+              <PropertyRef Name="IdNaoConformidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_sgqModelStoreContainer">
+          <EntitySet Name="tbl_Acessos" EntityType="Self.tbl_Acessos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Atividade_Diaria" EntityType="Self.Tbl_Atividade_Diaria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_atividades" EntityType="Self.tbl_atividades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_etapa" EntityType="Self.tbl_etapa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_funcao" EntityType="Self.tbl_funcao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Funcionario" EntityType="Self.tbl_Funcionario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_NaoConformidade" EntityType="Self.tbl_NaoConformidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_NaoConformidade_x_Norma" EntityType="Self.Tbl_NaoConformidade_x_Norma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Processo" EntityType="Self.tbl_Processo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AtivDiaria_AtividadeId" Association="Self.FK_AtivDiaria_AtividadeId">
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+            <End Role="tbl_atividades" EntitySet="tbl_atividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AtivDiaria_EtapaId" Association="Self.FK_AtivDiaria_EtapaId">
+            <End Role="tbl_etapa" EntitySet="tbl_etapa" />
+            <End Role="tbl_atividades" EntitySet="tbl_atividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Atividade_naoConformidade" Association="Self.FK_Atividade_naoConformidade">
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Funcao_AcessoId" Association="Self.FK_Funcao_AcessoId">
+            <End Role="tbl_funcao" EntitySet="tbl_funcao" />
+            <End Role="tbl_Acessos" EntitySet="tbl_Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Funcao_FuncionarioId" Association="Self.FK_Funcao_FuncionarioId">
+            <End Role="tbl_funcao" EntitySet="tbl_funcao" />
+            <End Role="tbl_Funcionario" EntitySet="tbl_Funcionario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_AtividadeId" Association="Self.FK_Processo_AtividadeId">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_EtapaId" Association="Self.FK_Processo_EtapaId">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="tbl_etapa" EntitySet="tbl_etapa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_naoConformidade" Association="Self.FK_Processo_naoConformidade">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Norma_x_Tbl_NaoConformidade" Association="Self.FK_Tbl_Norma_x_Tbl_NaoConformidade">
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+            <End Role="Tbl_NaoConformidade_x_Norma" EntitySet="Tbl_NaoConformidade_x_Norma" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_sgqModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="db_sgqEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Acessos" EntityType="db_sgqModel.tbl_Acessos" />
+          <EntitySet Name="Tbl_Atividade_Diaria" EntityType="db_sgqModel.Tbl_Atividade_Diaria" />
+          <EntitySet Name="tbl_atividades" EntityType="db_sgqModel.tbl_atividades" />
+          <EntitySet Name="tbl_etapa" EntityType="db_sgqModel.tbl_etapa" />
+          <EntitySet Name="tbl_funcao" EntityType="db_sgqModel.tbl_funcao" />
+          <EntitySet Name="tbl_Funcionario" EntityType="db_sgqModel.tbl_Funcionario" />
+          <EntitySet Name="tbl_NaoConformidade" EntityType="db_sgqModel.tbl_NaoConformidade" />
+          <EntitySet Name="Tbl_NaoConformidade_x_Norma" EntityType="db_sgqModel.Tbl_NaoConformidade_x_Norma" />
+          <EntitySet Name="tbl_Processo" EntityType="db_sgqModel.tbl_Processo" />
+          <AssociationSet Name="FK_Funcao_AcessoId" Association="db_sgqModel.FK_Funcao_AcessoId">
+            <End Role="tbl_funcao" EntitySet="tbl_funcao" />
+            <End Role="tbl_Acessos" EntitySet="tbl_Acessos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AtivDiaria_AtividadeId" Association="db_sgqModel.FK_AtivDiaria_AtividadeId">
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+            <End Role="tbl_atividades" EntitySet="tbl_atividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Atividade_naoConformidade" Association="db_sgqModel.FK_Atividade_naoConformidade">
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_AtividadeId" Association="db_sgqModel.FK_Processo_AtividadeId">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="Tbl_Atividade_Diaria" EntitySet="Tbl_Atividade_Diaria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AtivDiaria_EtapaId" Association="db_sgqModel.FK_AtivDiaria_EtapaId">
+            <End Role="tbl_etapa" EntitySet="tbl_etapa" />
+            <End Role="tbl_atividades" EntitySet="tbl_atividades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_EtapaId" Association="db_sgqModel.FK_Processo_EtapaId">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="tbl_etapa" EntitySet="tbl_etapa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Funcao_FuncionarioId" Association="db_sgqModel.FK_Funcao_FuncionarioId">
+            <End Role="tbl_funcao" EntitySet="tbl_funcao" />
+            <End Role="tbl_Funcionario" EntitySet="tbl_Funcionario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Processo_naoConformidade" Association="db_sgqModel.FK_Processo_naoConformidade">
+            <End Role="tbl_Processo" EntitySet="tbl_Processo" />
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Norma_x_Tbl_NaoConformidade" Association="db_sgqModel.FK_Tbl_Norma_x_Tbl_NaoConformidade">
+            <End Role="tbl_NaoConformidade" EntitySet="tbl_NaoConformidade" />
+            <End Role="Tbl_NaoConformidade_x_Norma" EntitySet="Tbl_NaoConformidade_x_Norma" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_Acessos">
+          <Key>
+            <PropertyRef Name="IdAcesso" />
+          </Key>
+          <Property Name="IdAcesso" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DsAcesso" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IdFuncaoAcesso" Type="Int64" />
+          <NavigationProperty Name="tbl_funcao" Relationship="db_sgqModel.FK_Funcao_AcessoId" FromRole="tbl_Acessos" ToRole="tbl_funcao" />
+        </EntityType>
+        <EntityType Name="Tbl_Atividade_Diaria">
+          <Key>
+            <PropertyRef Name="IdAtividadeDiaria" />
+          </Key>
+          <Property Name="IdAtividadeDiaria" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesso" Type="Int64" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Cadastro" Type="DateTime" Precision="3" />
+          <Property Name="Dt_Alteracao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_atividades" Relationship="db_sgqModel.FK_AtivDiaria_AtividadeId" FromRole="Tbl_Atividade_Diaria" ToRole="tbl_atividades" />
+          <NavigationProperty Name="tbl_NaoConformidade" Relationship="db_sgqModel.FK_Atividade_naoConformidade" FromRole="Tbl_Atividade_Diaria" ToRole="tbl_NaoConformidade" />
+          <NavigationProperty Name="tbl_Processo" Relationship="db_sgqModel.FK_Processo_AtividadeId" FromRole="Tbl_Atividade_Diaria" ToRole="tbl_Processo" />
+        </EntityType>
+        <EntityType Name="tbl_atividades">
+          <Key>
+            <PropertyRef Name="IdAtividade" />
+          </Key>
+          <Property Name="IdAtividade" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAtividadeDiaria" Type="Int64" />
+          <Property Name="IdEtapa" Type="Int64" />
+          <Property Name="DsSelecionado" Type="Int32" />
+          <NavigationProperty Name="Tbl_Atividade_Diaria" Relationship="db_sgqModel.FK_AtivDiaria_AtividadeId" FromRole="tbl_atividades" ToRole="Tbl_Atividade_Diaria" />
+          <NavigationProperty Name="tbl_etapa" Relationship="db_sgqModel.FK_AtivDiaria_EtapaId" FromRole="tbl_atividades" ToRole="tbl_etapa" />
+        </EntityType>
+        <EntityType Name="tbl_etapa">
+          <Key>
+            <PropertyRef Name="IdEtapa" />
+          </Key>
+          <Property Name="IdEtapa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesso" Type="Int64" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Complemento" Type="String" MaxLength="140" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Cadastro" Type="DateTime" Precision="3" />
+          <Property Name="Dt_Alteração" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_atividades" Relationship="db_sgqModel.FK_AtivDiaria_EtapaId" FromRole="tbl_etapa" ToRole="tbl_atividades" />
+          <NavigationProperty Name="tbl_Processo" Relationship="db_sgqModel.FK_Processo_EtapaId" FromRole="tbl_etapa" ToRole="tbl_Processo" />
+        </EntityType>
+        <EntityType Name="tbl_funcao">
+          <Key>
+            <PropertyRef Name="IdFuncao" />
+          </Key>
+          <Property Name="IdFuncao" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DsFuncao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Acessos" Relationship="db_sgqModel.FK_Funcao_AcessoId" FromRole="tbl_funcao" ToRole="tbl_Acessos" />
+          <NavigationProperty Name="tbl_Funcionario" Relationship="db_sgqModel.FK_Funcao_FuncionarioId" FromRole="tbl_funcao" ToRole="tbl_Funcionario" />
+        </EntityType>
+        <EntityType Name="tbl_Funcionario">
+          <Key>
+            <PropertyRef Name="IdFuncionario" />
+          </Key>
+          <Property Name="IdFuncionario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFuncao" Type="Int64" />
+          <Property Name="DsFuncionario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DsUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DsSenha" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Cadastro" Type="DateTime" Precision="3" />
+          <Property Name="Dt_Alteracao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_funcao" Relationship="db_sgqModel.FK_Funcao_FuncionarioId" FromRole="tbl_Funcionario" ToRole="tbl_funcao" />
+        </EntityType>
+        <EntityType Name="tbl_NaoConformidade">
+          <Key>
+            <PropertyRef Name="IdNaoConformidade" />
+          </Key>
+          <Property Name="IdNaoConformidade" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProcesso" Type="Int64" />
+          <Property Name="IdAtividadeDiaria" Type="Int64" />
+          <Property Name="DsNaoConformidade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Dstatus" Type="Boolean" Nullable="false" />
+          <Property Name="Dt_Cadastro" Type="DateTime" Precision="3" />
+          <Property Name="Dt_Alteracao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Atividade_Diaria" Relationship="db_sgqModel.FK_Atividade_naoConformidade" FromRole="tbl_NaoConformidade" ToRole="Tbl_Atividade_Diaria" />
+          <NavigationProperty Name="tbl_Processo" Relationship="db_sgqModel.FK_Processo_naoConformidade" FromRole="tbl_NaoConformidade" ToRole="tbl_Processo" />
+          <NavigationProperty Name="Tbl_NaoConformidade_x_Norma" Relationship="db_sgqModel.FK_Tbl_Norma_x_Tbl_NaoConformidade" FromRole="tbl_NaoConformidade" ToRole="Tbl_NaoConformidade_x_Norma" />
+        </EntityType>
+        <EntityType Name="Tbl_NaoConformidade_x_Norma">
+          <Key>
+            <PropertyRef Name="IdSequencial" />
+          </Key>
+          <Property Name="IdNorma" Type="Int64" Nullable="false" />
+          <Property Name="IdNaoConformidade" Type="Int64" Nullable="false" />
+          <Property Name="UrlNorma" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdSequencial" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="tbl_NaoConformidade" Relationship="db_sgqModel.FK_Tbl_Norma_x_Tbl_NaoConformidade" FromRole="Tbl_NaoConformidade_x_Norma" ToRole="tbl_NaoConformidade" />
+        </EntityType>
+        <EntityType Name="tbl_Processo">
+          <Key>
+            <PropertyRef Name="IdProcesso" />
+          </Key>
+          <Property Name="IdProcesso" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dt_Cadastro" Type="DateTime" Precision="3" />
+          <Property Name="Dt_Alteracao" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Atividade_Diaria" Relationship="db_sgqModel.FK_Processo_AtividadeId" FromRole="tbl_Processo" ToRole="Tbl_Atividade_Diaria" />
+          <NavigationProperty Name="tbl_etapa" Relationship="db_sgqModel.FK_Processo_EtapaId" FromRole="tbl_Processo" ToRole="tbl_etapa" />
+          <NavigationProperty Name="tbl_NaoConformidade" Relationship="db_sgqModel.FK_Processo_naoConformidade" FromRole="tbl_Processo" ToRole="tbl_NaoConformidade" />
+        </EntityType>
+        <Association Name="FK_Funcao_AcessoId">
+          <End Type="db_sgqModel.tbl_funcao" Role="tbl_funcao" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_Acessos" Role="tbl_Acessos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_funcao">
+              <PropertyRef Name="IdFuncao" />
+            </Principal>
+            <Dependent Role="tbl_Acessos">
+              <PropertyRef Name="IdFuncaoAcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AtivDiaria_AtividadeId">
+          <End Type="db_sgqModel.Tbl_Atividade_Diaria" Role="Tbl_Atividade_Diaria" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_atividades" Role="tbl_atividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Principal>
+            <Dependent Role="tbl_atividades">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Atividade_naoConformidade">
+          <End Type="db_sgqModel.Tbl_Atividade_Diaria" Role="Tbl_Atividade_Diaria" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_NaoConformidade" Role="tbl_NaoConformidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Principal>
+            <Dependent Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdAtividadeDiaria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_AtividadeId">
+          <End Type="db_sgqModel.tbl_Processo" Role="tbl_Processo" Multiplicity="0..1" />
+          <End Type="db_sgqModel.Tbl_Atividade_Diaria" Role="Tbl_Atividade_Diaria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="Tbl_Atividade_Diaria">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AtivDiaria_EtapaId">
+          <End Type="db_sgqModel.tbl_etapa" Role="tbl_etapa" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_atividades" Role="tbl_atividades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_etapa">
+              <PropertyRef Name="IdEtapa" />
+            </Principal>
+            <Dependent Role="tbl_atividades">
+              <PropertyRef Name="IdEtapa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_EtapaId">
+          <End Type="db_sgqModel.tbl_Processo" Role="tbl_Processo" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_etapa" Role="tbl_etapa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="tbl_etapa">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Funcao_FuncionarioId">
+          <End Type="db_sgqModel.tbl_funcao" Role="tbl_funcao" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_Funcionario" Role="tbl_Funcionario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_funcao">
+              <PropertyRef Name="IdFuncao" />
+            </Principal>
+            <Dependent Role="tbl_Funcionario">
+              <PropertyRef Name="IdFuncao" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Processo_naoConformidade">
+          <End Type="db_sgqModel.tbl_Processo" Role="tbl_Processo" Multiplicity="0..1" />
+          <End Type="db_sgqModel.tbl_NaoConformidade" Role="tbl_NaoConformidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Processo">
+              <PropertyRef Name="IdProcesso" />
+            </Principal>
+            <Dependent Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdProcesso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Norma_x_Tbl_NaoConformidade">
+          <End Type="db_sgqModel.tbl_NaoConformidade" Role="tbl_NaoConformidade" Multiplicity="1" />
+          <End Type="db_sgqModel.Tbl_NaoConformidade_x_Norma" Role="Tbl_NaoConformidade_x_Norma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_NaoConformidade">
+              <PropertyRef Name="IdNaoConformidade" />
+            </Principal>
+            <Dependent Role="Tbl_NaoConformidade_x_Norma">
+              <PropertyRef Name="IdNaoConformidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_sgqModelStoreContainer" CdmEntityContainer="db_sgqEntities">
+          <EntitySetMapping Name="tbl_Acessos">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_Acessos">
+              <MappingFragment StoreEntitySet="tbl_Acessos">
+                <ScalarProperty Name="IdFuncaoAcesso" ColumnName="IdFuncaoAcesso" />
+                <ScalarProperty Name="DsAcesso" ColumnName="DsAcesso" />
+                <ScalarProperty Name="IdAcesso" ColumnName="IdAcesso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Atividade_Diaria">
+            <EntityTypeMapping TypeName="db_sgqModel.Tbl_Atividade_Diaria">
+              <MappingFragment StoreEntitySet="Tbl_Atividade_Diaria">
+                <ScalarProperty Name="Dt_Alteracao" ColumnName="Dt_Alteracao" />
+                <ScalarProperty Name="Dt_Cadastro" ColumnName="Dt_Cadastro" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdProcesso" ColumnName="IdProcesso" />
+                <ScalarProperty Name="IdAtividadeDiaria" ColumnName="IdAtividadeDiaria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_atividades">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_atividades">
+              <MappingFragment StoreEntitySet="tbl_atividades">
+                <ScalarProperty Name="DsSelecionado" ColumnName="DsSelecionado" />
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+                <ScalarProperty Name="IdAtividadeDiaria" ColumnName="IdAtividadeDiaria" />
+                <ScalarProperty Name="IdAtividade" ColumnName="IdAtividade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_etapa">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_etapa">
+              <MappingFragment StoreEntitySet="tbl_etapa">
+                <ScalarProperty Name="Dt_Alteração" ColumnName="Dt_Alteração" />
+                <ScalarProperty Name="Dt_Cadastro" ColumnName="Dt_Cadastro" />
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdProcesso" ColumnName="IdProcesso" />
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_funcao">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_funcao">
+              <MappingFragment StoreEntitySet="tbl_funcao">
+                <ScalarProperty Name="DsFuncao" ColumnName="DsFuncao" />
+                <ScalarProperty Name="IdFuncao" ColumnName="IdFuncao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Funcionario">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_Funcionario">
+              <MappingFragment StoreEntitySet="tbl_Funcionario">
+                <ScalarProperty Name="Dt_Alteracao" ColumnName="Dt_Alteracao" />
+                <ScalarProperty Name="Dt_Cadastro" ColumnName="Dt_Cadastro" />
+                <ScalarProperty Name="DsSenha" ColumnName="DsSenha" />
+                <ScalarProperty Name="DsUsuario" ColumnName="DsUsuario" />
+                <ScalarProperty Name="DsFuncionario" ColumnName="DsFuncionario" />
+                <ScalarProperty Name="IdFuncao" ColumnName="IdFuncao" />
+                <ScalarProperty Name="IdFuncionario" ColumnName="IdFuncionario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_NaoConformidade">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_NaoConformidade">
+              <MappingFragment StoreEntitySet="tbl_NaoConformidade">
+                <ScalarProperty Name="Dt_Alteracao" ColumnName="Dt_Alteracao" />
+                <ScalarProperty Name="Dt_Cadastro" ColumnName="Dt_Cadastro" />
+                <ScalarProperty Name="Dstatus" ColumnName="Dstatus" />
+                <ScalarProperty Name="DsNaoConformidade" ColumnName="DsNaoConformidade" />
+                <ScalarProperty Name="IdAtividadeDiaria" ColumnName="IdAtividadeDiaria" />
+                <ScalarProperty Name="IdProcesso" ColumnName="IdProcesso" />
+                <ScalarProperty Name="IdNaoConformidade" ColumnName="IdNaoConformidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_NaoConformidade_x_Norma">
+            <EntityTypeMapping TypeName="db_sgqModel.Tbl_NaoConformidade_x_Norma">
+              <MappingFragment StoreEntitySet="Tbl_NaoConformidade_x_Norma">
+                <ScalarProperty Name="IdSequencial" ColumnName="IdSequencial" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="UrlNorma" ColumnName="UrlNorma" />
+                <ScalarProperty Name="IdNaoConformidade" ColumnName="IdNaoConformidade" />
+                <ScalarProperty Name="IdNorma" ColumnName="IdNorma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Processo">
+            <EntityTypeMapping TypeName="db_sgqModel.tbl_Processo">
+              <MappingFragment StoreEntitySet="tbl_Processo">
+                <ScalarProperty Name="Dt_Alteracao" ColumnName="Dt_Alteracao" />
+                <ScalarProperty Name="Dt_Cadastro" ColumnName="Dt_Cadastro" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdProcesso" ColumnName="IdProcesso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

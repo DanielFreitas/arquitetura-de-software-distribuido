@@ -1,0 +1,45 @@
+﻿@model WebMvcSgq.Models.tbl_etapa
+
+@{
+    ViewBag.Title = "Exluir Etapa";
+}
+
+<h2>Excluir Etapa</h2>
+
+<h3>Você quer apagar esse registro?</h3>
+<div>
+    <h4>Etapa SGQ</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Cadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdEtapa)
+
+<div class="form-actions no-color">
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+    <button type="submit" class="btn btn-sm btn-danger glyphicon glyphicon-remove" value=" " data-toggle="tooltip" data-placement="right" title="Excluir">
+    </button>
+</div>
+    }
+</div>

@@ -1,0 +1,65 @@
+﻿@model WebMvcSgq.Models.NaoConformidadeModel
+
+@{
+    ViewBag.Title = "Excluir não conformidade";
+}
+
+<br />
+
+<h4>Excluir não conformidade</h4>
+<hr />
+<h3>Tem certeza que deseja excluir esse registro?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Descrição
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DsNaoConformidade)
+        </dd>
+
+        <dt>
+            Data do cadastro
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+        <dt>
+            Data da alteração
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Alteracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Processo.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Processo.Nome)
+        </dd>
+
+        <dt>
+            Descrição
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Atividade_Diaria.Descricao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+            <input type="submit" value="Excluir" class="btn btn-sm btn-danger" /> |
+        </div>
+    }
+</div>

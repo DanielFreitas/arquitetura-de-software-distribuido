@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0da794d894dc4177ae3758e4cd0a9f36" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="db_sgqModel.tbl_Acessos" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="db_sgqModel.Tbl_Atividade_Diaria" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_atividades" Width="1.5" PointX="5.25" PointY="4.75" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_etapa" Width="1.5" PointX="3" PointY="2.875" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_funcao" Width="1.5" PointX="7.75" PointY="2.75" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_Funcionario" Width="1.5" PointX="10" PointY="3.625" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_NaoConformidade" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="db_sgqModel.Tbl_NaoConformidade_x_Norma" Width="1.5" PointX="7.5" PointY="8.625" />
+        <EntityTypeShape EntityType="db_sgqModel.tbl_Processo" Width="1.5" PointX="0.75" PointY="4.625" />
+        <AssociationConnector Association="db_sgqModel.FK_Funcao_AcessoId" />
+        <AssociationConnector Association="db_sgqModel.FK_AtivDiaria_AtividadeId" />
+        <AssociationConnector Association="db_sgqModel.FK_Atividade_naoConformidade" />
+        <AssociationConnector Association="db_sgqModel.FK_Processo_AtividadeId" />
+        <AssociationConnector Association="db_sgqModel.FK_AtivDiaria_EtapaId" />
+        <AssociationConnector Association="db_sgqModel.FK_Processo_EtapaId" />
+        <AssociationConnector Association="db_sgqModel.FK_Funcao_FuncionarioId" />
+        <AssociationConnector Association="db_sgqModel.FK_Processo_naoConformidade" />
+        <AssociationConnector Association="db_sgqModel.FK_Tbl_Norma_x_Tbl_NaoConformidade" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

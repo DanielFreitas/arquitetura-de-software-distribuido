@@ -1,0 +1,50 @@
+﻿@model WebMvcSgq.Models.tbl_etapa
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Etapa SGQ</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Complemento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Complemento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Cadastro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dt_Alteração)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Alteração)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+    @Html.ActionLink(" ", "EditarEtapa", new { id = Model.IdEtapa }, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title = "Editar" })
+</p>

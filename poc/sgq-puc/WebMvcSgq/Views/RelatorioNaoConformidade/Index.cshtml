@@ -1,0 +1,108 @@
+﻿
+@model WebMvcSgq.Models.Classe.RelatNaoConformidadeClass
+
+@{
+    ViewBag.Title = "Pesquisar não conformidades";
+
+}
+
+<br />
+
+<h4>Pesquisar não conformidades</h4>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <br />
+
+    <div class="form-horizontal">
+        @using (Html.BeginForm("Index", "RelatorioNaoConformidade", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdAtividadeDiaria, "Atividade diária", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.IdAtividadeDiaria, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdAtividadeDiaria, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IdProcesso, "Processo", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.IdProcesso, null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdProcesso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DsNaoConformidade, "Descrição", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DsNaoConformidade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DsNaoConformidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.status, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.status, new { htmlAtributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <br />
+
+        <div style="color: red;">
+            <h4>@ViewBag.Message</h4>
+        </div>
+
+        <br />
+
+        <table class="webGrid" id="tblNaoConformidade">
+            <tr class="grid-header">
+                <th>Processo</th>
+                <th>Atividade Diaria</th>
+                <th>Descricao</th>
+                <th>Status</th>
+                <th>Data de Cadastro</th>
+            </tr>
+
+
+
+            @for (var a = 0; a < Model.ListaNaoConformidade.Count(); a++)
+            {
+                string css = "alt";
+
+                if ((a % 2) == 0)
+                {
+                    css = "";
+                }
+
+                <tr class="@css">
+                    <td>@Model.ListaNaoConformidade[a].NomeProcesso</td>
+                    <td>@Model.ListaNaoConformidade[a].NomeAtividadeDiaria</td>
+                    <td>@Model.ListaNaoConformidade[a].DsNaoConformidade</td>
+                    <td>@ViewBag.Status</td>
+                    <td>@Model.ListaNaoConformidade[a].DataCadastro</td>
+                </tr>
+            }
+
+        </table>
+
+        <br />
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Pesquisar" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+
+}

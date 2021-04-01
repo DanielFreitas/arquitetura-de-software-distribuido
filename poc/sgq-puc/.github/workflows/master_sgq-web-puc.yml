@@ -1,0 +1,42 @@
+name: Build, test and deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-test-and-deploy:
+    runs-on: 'windows-latest'
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Restore NuGet packages
+      run: nuget restore
+
+    - name: Build and publish
+      run: msbuild $Env:GITHUB_WORKSPACE\WebMvcSgq\WebMvcSgq.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+
+    - name: Setup VSTest.exe
+      uses: Malcolmnixon/Setup-VSTest@v3
+
+    - name: Build Unit Tests
+      run: msbuild $Env:GITHUB_WORKSPACE\WebMvcSgq.UnitTest\WebMvcSgq.UnitTest.csproj
+
+    - name: Execute Unit Tests
+      run: vstest.console $Env:GITHUB_WORKSPACE\WebMvcSgq.UnitTest\bin\Debug\WebMvcSgq.UnitTest.dll /ResultsDirectory:"./testresults" /Logger:trx /EnableCodeCoverage --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=lcov
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'sgq-web-puc'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
+        package: \published\

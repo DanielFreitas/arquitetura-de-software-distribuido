@@ -1,0 +1,37 @@
+﻿@*@model IEnumerable<WebMvcSgq.Models.Incidente>
+@{
+    ViewBag.Title = "Index";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "IdIncidente", rowsPerPage: 5, canSort: true);
+}
+<br />
+<p>
+    @Html.ActionLink("Novo Incidente", "AdicionarIncidente", null, new { @class = "btn btn-primary" })
+</p>
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+caption: "Detalhes do Incidente",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("IdIncidente",header:"ID",style:"text-align-left"),
+    grid.Column("IdEtapa",header:"Etapa"),
+    grid.Column("IdProblema",header:"Problema"),
+    grid.Column("IdItem",header:"Item"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink("Editar", "EditarIncidente", new { id = item.IdIncidente })
+    |
+    @Html.ActionLink("Deletar", "DeletarIncidente", new { id = item.IdIncidente })
+    |
+    @Html.ActionLink("Detalhes", "Detalhes", new { id = item.IdIncidente })
+    </text>
+)
+}
+)*@

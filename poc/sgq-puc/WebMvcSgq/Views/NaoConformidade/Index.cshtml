@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WebMvcSgq.Models.NaoConformidadeModel>
+
+@{
+    ViewBag.Title = "Cadastro de não conformidade";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "IdNaoConformidade", rowsPerPage: 5, canSort: true);
+}
+
+<br />
+
+<h4>Cadastro de não conformidade</h4>
+<hr />
+<p>
+    @Html.ActionLink("Gerar não conformidade", "NovaNaoConformidade", new { IdNaoConformidade = 0 }, new { @class = "btn btn-primary" })
+</p>
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("IdNaoConformidade",header:"ID",style:"text-align-left"),
+    grid.Column("tbl_Processo.Nome",header:"Processo"),
+    grid.Column("tbl_Atividade_Diaria.Descricao",header:"Descricao"),
+    grid.Column("Dt_Cadastro",header:"Data Cadastro"),
+    grid.Column("Dt_Alteracao",header:"Data Alteracao"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink(" ", "Detalhes", new {IdNaoConformidade = item.IdNaoConformidade}, new { @class = "btn btn-sm btn-info glyphicon glyphicon glyphicon-search", title="Ver detalhe" })
+    
+    @Html.ActionLink(" ", "EditarNaoConformidade", new {IdNaoConformidade = item.IdNaoConformidade}, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title="Editar" })
+
+    @Html.ActionLink(" ", "DeletarNaoConformidade", new {IdNaoConformidade = item.IdNaoConformidade}, new { @class = "btn btn-sm btn-danger glyphicon glyphicon-remove", title="Excluir" })
+
+
+    </text>
+)
+}
+)
+
+@using (Html.BeginForm("Index", "Processo", FormMethod.Get))
+{
+    @Html.ActionLink(" ", "Index", "Processo", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+}
+

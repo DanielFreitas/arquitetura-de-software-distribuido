@@ -1,0 +1,113 @@
+﻿@using HtmlHelpers.BeginCollectionItem;
+
+@model WebMvcSgq.Models.Classe.AtiviModelView
+
+@{
+    ViewBag.Title = "Editar atividade diária";
+}
+
+<br />
+
+<h4>Editar atividade diária</h4>
+<hr />
+@using (Html.BeginForm("EditarAtividadeDiaria", "AtividadeDiaria", FormMethod.Post))
+{
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.atividadeDiaCla.IdAtividade)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.atividadeDiaCla.IdProcesso, "Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.atividadeDiaCla.IdProcesso, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.atividadeDiaCla.IdProcesso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.atividadeDiaCla.NomeProcesso, "Processo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.atividadeDiaCla.NomeProcesso, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.atividadeDiaCla.NomeProcesso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.atividadeDiaCla.Descricao, "Descrição", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.atividadeDiaCla.Descricao, new { @class = "form-control", @maxLength = 50 })
+                @Html.ValidationMessageFor(model => model.atividadeDiaCla.Descricao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.atividadeDiaCla.Dt_Cadastro, "Data do cadastro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.atividadeDiaCla.Dt_Cadastro, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.atividadeDiaCla.Dt_Cadastro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <table class="webGrid" id="tblAtividades">
+            <tr class="grid-header">
+                <th>IdEtapa</th>
+                <th>Descrição</th>
+                <th>Complemento</th>
+                <th>Ação</th>
+            </tr>
+
+            @if (Model.atividadeCla.Count() > 0)
+            {
+                for (var a = 0; a < Model.atividadeCla.Count(); a++)
+                {
+                    string css = "alt";
+
+                    if ((a % 2) == 0)
+                    {
+                        css = "";
+                    }
+
+                    @Html.HiddenFor(model => Model.atividadeCla[a].IdAtividade)
+                    @Html.HiddenFor(model => Model.atividadeCla[a].IdAtividadeDiaria)
+                    @Html.HiddenFor(model => Model.atividadeCla[a].IdEtapa)
+                    @Html.HiddenFor(model => Model.atividadeCla[a].DsEtapa)
+
+                    <tr class="@css">
+                        <td>@Model.atividadeCla[a].IdEtapa</td>
+                        <td>@Model.atividadeCla[a].DsEtapa</td>
+                        <td>@Model.atividadeCla[a].Complemento</td>
+                        <td>@Html.CheckBoxFor(it => @Model.atividadeCla[a].IsActive)</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                for (var a = 0; a < Model.etapaCla.Count(); a++)
+                {
+                    @Html.HiddenFor(model => Model.etapaCla[a].IdEtapa)
+                    @Html.HiddenFor(model => Model.etapaCla[a].Descricao)
+                    @Html.HiddenFor(model => Model.etapaCla[a].Complemento)
+                    @Html.HiddenFor(model => Model.etapaCla[a].IsActive)
+
+                    <tr>
+                        <td>@Model.etapaCla[a].IdEtapa</td>
+                        <td>@Model.etapaCla[a].Descricao</td>
+                        <td>@Model.etapaCla[a].Complemento</td>
+                        <td>@Html.CheckBoxFor(it => @Model.etapaCla[a].IsActive)</td>
+                    </tr>
+                }
+            }
+
+
+
+        </table>
+        <br />
+        <div class="form-group">
+            @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+            <button type="submit" class="btn btn-sm btn-primary glyphicon glyphicon-floppy-disk" value=" " data-toggle="tooltip" data-placement="right" title="Salvar">
+            </button>
+        </div>
+
+    </div>
+}

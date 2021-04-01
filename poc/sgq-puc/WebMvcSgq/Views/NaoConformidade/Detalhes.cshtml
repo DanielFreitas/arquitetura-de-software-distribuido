@@ -1,0 +1,66 @@
+﻿@model WebMvcSgq.Models.NaoConformidadeModel
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<br />
+
+<h4>Detalhes</h4>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Descrição
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DsNaoConformidade)
+        </dd>
+
+        <dt>
+            Data do cadastro
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+        <dt>
+            Data da alteração
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Alteracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Processo.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Processo.Nome)
+        </dd>
+
+        <dt>
+            Descrição
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Atividade_Diaria.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Norma")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_NaoConformidade_x_Norma.FirstOrDefault().Titulo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+    @Html.ActionLink(" ", "EditarNaoConformidade", new { IdNaoConformidade = Model.IdNaoConformidade }, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title = "Editar" })
+</p>

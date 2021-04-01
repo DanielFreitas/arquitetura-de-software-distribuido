@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebMvcSgq.Models.tbl_etapa>
+
+@{
+    ViewBag.Title = "Etapa";
+    var grid = new WebGrid(source: Model, canPage: true, defaultSort: "IdEtapa", rowsPerPage: 5, canSort: true);
+}
+
+<br />
+<p>
+    @Html.ActionLink("Nova Etapa", "AdicionarEtapa", new { IdEtapa = 0 }, new { @class = "btn btn-primary" })
+</p>
+@grid.GetHtml(
+tableStyle: "webGrid",
+htmlAttributes: new { id = "checkableGrid" },
+fillEmptyRows: true,
+alternatingRowStyle: "alt",
+headerStyle: "grid-header",
+footerStyle: "foot-grid",
+mode: WebGridPagerModes.All,
+firstText: "<< Primeiro",
+previousText: " < Anterior",
+nextText: "Próximo >",
+lastText: "Último >>",
+caption: "Detalhes da Etapa",
+emptyRowCellValue: null,
+columns: new[]{
+    grid.Column("IdEtapa",header:"ID",style:"text-align-left"),
+    grid.Column("tbl_Processo.Nome",header:"Processo"),
+    grid.Column("Descricao",header:"Descrição"),
+    grid.Column("Dt_Cadastro",header:"Data Cadastro"),
+    grid.Column("Dt_Alteração",header:"Data Alteracao"),
+    grid.Column("",header: "Ações",format: @<text>@Html.ActionLink(" ", "EditarEtapa", new { id = item.IdEtapa },new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title="Editar" })
+    |
+    @Html.ActionLink(" ", "DeletarEtapa", new { id = item.IdEtapa },new { @class = "btn btn-sm btn-danger glyphicon glyphicon-remove", title="Excluir" })
+    |
+    @Html.ActionLink(" ", "Detalhes", new { id = item.IdEtapa },new { @class = "btn btn-sm btn-info glyphicon glyphicon glyphicon-search", title="Ver detalhe" })
+    </text>
+)
+
+}
+)
+
+@using (Html.BeginForm("Index", "Processo", FormMethod.Get))
+{
+    @Html.ActionLink("Voltar aos Processo", "Index", "Processo",new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+}

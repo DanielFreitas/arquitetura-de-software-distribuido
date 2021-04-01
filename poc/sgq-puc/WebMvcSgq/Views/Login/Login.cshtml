@@ -1,0 +1,42 @@
+﻿@model WebMvcSgq.Models.tbl_Funcionario
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<br />
+
+<h4>Login</h4>
+<hr />
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+
+    <h3>@ViewBag.Message</h3>
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DsUsuario, "Usuário ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DsUsuario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DsUsuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DsSenha, "Senha ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.DsSenha, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DsSenha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Logar" name="LogarSite" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}

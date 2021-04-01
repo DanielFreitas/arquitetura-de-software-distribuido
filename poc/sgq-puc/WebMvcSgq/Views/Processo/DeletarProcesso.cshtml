@@ -1,0 +1,45 @@
+﻿@model WebMvcSgq.Models.tbl_Processo
+
+@{
+    ViewBag.Title = "Exluir processo";
+}
+
+<br />
+
+<h4>Excluir processo</h4>
+<hr />
+<h3>Tem certeza que deseja excluir esse registro?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            Data do cadastro            
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdProcesso)
+
+<div class="form-actions no-color">
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+    <button type="submit" class="btn btn-sm btn-danger glyphicon glyphicon-remove" value=" " data-toggle="tooltip" data-placement="right" title="Excluir">
+    </button>
+</div>
+    }
+</div>

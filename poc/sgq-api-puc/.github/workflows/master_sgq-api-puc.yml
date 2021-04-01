@@ -1,0 +1,48 @@
+name: Build, test and deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build-test-and-deploy:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # Configure version of .Net core for the runner
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.102
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Restore NuGet packages
+      run: nuget restore
+
+    - name: Build dotnet
+      run: dotnet build GestaoQualidadeAutomotiva.API.PUC/GestaoQualidadeAutomotiva.API.PUC.csproj --configuration Release
+
+    - name: Execute Unit Tests
+      run: dotnet test GestaoQualidadeAutomotiva.UnitTests/GestaoQualidadeAutomotiva.UnitTests.csproj --configuration Release
+
+    #Build and publish the webapp to a folder
+    - name: Publish
+      run: dotnet publish GestaoQualidadeAutomotiva.API.PUC/GestaoQualidadeAutomotiva.API.PUC.csproj --configuration Release -o ./output/
+
+    #Deploy to Azure webapp using Github profile configured in secrets 
+    - name: deploy to azure web app
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: sgq-api-puc
+        publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+        package: ./output/

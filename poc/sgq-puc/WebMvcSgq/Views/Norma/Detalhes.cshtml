@@ -1,0 +1,80 @@
+﻿@model WebMvcSgq.Models.Classe.LinksWrapper<WebMvcSgq.Models.Classe.Content>
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<br />
+
+<h4>Detalhes</h4>
+<hr />
+<div>  
+    <dl class="dl-horizontal">
+        <dt>
+            Id
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.NormaId)
+        </dd>
+
+        <dt>
+            Título
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.Titulo)
+        </dd>
+
+        <dt>
+            Data da publicação
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.DataPublicacao)
+        </dd>
+
+        <dt>
+            Comitê
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.Comite)
+        </dd>
+
+        <dt>
+            Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.Status)
+        </dd>
+
+        <dt>
+            Organismo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.Organismo)
+        </dd>
+
+        <dt>
+            Objetivo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.Objetivo)
+        </dd>
+
+        <dt>
+            Url
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(Model => Model.Content.UrlDocumento)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+</p>

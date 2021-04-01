@@ -1,0 +1,17 @@
+﻿@model WebMvcSgq.Models.tbl_Acessos
+
+@{
+    ViewBag.Title = "Sem acesso";
+}
+
+<br/>
+<hr />
+
+<div>
+    <h2>Você não tem acesso nessa pagina!</h2>
+</div>
+
+<div>
+    @Html.ActionLink(" ", "Index", "Home",null, new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+</div>
+

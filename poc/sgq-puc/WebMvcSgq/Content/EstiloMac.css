@@ -1,0 +1,33 @@
+﻿.webGrid {
+    margin: 4px;
+    border-collapse: collapse;
+    font-family: Tahoma;
+}
+
+.grid-header {
+    background-color: #990000;
+    font-weight: bold;
+    color: White !important;
+}
+
+.webGrid th a {
+    color: White;
+    text-decoration: none;
+}
+
+.webGrid th, .webGrid td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.alt {
+    background-color: #F4EFEF;
+}
+
+.webGrid th a:hover {
+    text-decoration: underline;
+}
+
+.to-the-right {
+    text-align: right;
+}

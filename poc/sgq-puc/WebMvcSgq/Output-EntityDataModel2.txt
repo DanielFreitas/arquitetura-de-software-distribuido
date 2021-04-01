@@ -1,0 +1,9 @@
+﻿Generated model file: SGQModel.edmx.
+Loading metadata from the database took 00:00:00.6688005.
+Generating the model took 00:00:01.2831244.
+Generated model file: SGQModel.edmx.
+Loading metadata from the database took 00:00:00.5149712.
+Generating the model took 00:00:01.2567302.
+Generated model file: SGQModel.edmx.
+Loading metadata from the database took 00:00:00.5576490.
+Generating the model took 00:00:01.1380407.

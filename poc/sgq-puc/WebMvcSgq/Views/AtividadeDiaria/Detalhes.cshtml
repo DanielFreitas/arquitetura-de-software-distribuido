@@ -1,0 +1,50 @@
+﻿@model WebMvcSgq.Models.Tbl_Atividade_Diaria
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<br />
+
+<h4>Detalhes</h4>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            Descrição
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            Data do cadastro
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Cadastro)
+        </dd>
+
+        <dt>
+            Data da alteração
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dt_Alteracao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tbl_Processo.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbl_Processo.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(" ", "Index", "", new { @class = "btn btn-sm btn-default glyphicon glyphicon-arrow-left", title = "Voltar" })
+    @Html.ActionLink(" ", "EditarAtividadeDiaria", new { IdAtividadeDiaria = Model.IdAtividadeDiaria }, new { @class = "btn btn-sm btn-warning glyphicon glyphicon-pencil", title = "Editar" })
+</p>
